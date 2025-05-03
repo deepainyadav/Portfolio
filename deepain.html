@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Deepain's Store | eCommerce</title>
+  <style>
+    :root {
+      --primary: #007bff;
+      --secondary: #343a40;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --accent: #ffc107;
+      --bg: var(--light);
+      --text: var(--dark);
+      --card-bg: #fff;
+      --card-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      --nav-bg: var(--secondary);
+      --footer-bg: var(--secondary);
+      --input-bg: #f1f3f4;
+    }
+    body[data-theme="dark"] {
+      --primary: #0d6efd;
+      --secondary: #23272f;
+      --light: #181a1b;
+      --dark: #f8f9fa;
+      --accent: #ffc107;
+      --bg: #181a1b;
+      --text: #f8f9fa;
+      --card-bg: #23272f;
+      --card-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      --nav-bg: #23272f;
+      --footer-bg: #23272f;
+      --input-bg: #23272f;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+    }
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 32px 0 24px 0;
+      text-align: center;
+      position: relative;
+      border-radius: 0 0 24px 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .theme-toggle {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      background: var(--accent);
+      color: var(--dark);
+      border: none;
+      border-radius: 50px;
+      padding: 8px 18px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: background 0.2s, color 0.2s;
+    }
+    .theme-toggle:hover {
+      background: #ffd740;
+    }
+    header h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+      font-weight: 800;
+    }
+    header p {
+      font-size: 16px;
+      color: #e0e0e0;
+      opacity: 0.85;
+    }
+    nav {
+      background: var(--nav-bg);
+      padding: 18px 0;
+      text-align: center;
+      margin-bottom: 32px;
+      border-radius: 0 0 18px 18px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    nav a {
+      color: #fff;
+      margin: 0 22px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      padding: 6px 0;
+      border-bottom: 2px solid transparent;
+      transition: color 0.3s, border-bottom 0.3s;
+    }
+    nav a:hover {
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+    }
+    .hero {
+      background: linear-gradient(120deg, var(--primary) 60%, var(--accent) 100%);
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 38px;
+      font-weight: 900;
+      text-shadow: 1px 1px 8px rgba(0,0,0,0.18);
+      border-radius: 18px;
+      margin: 32px auto 0 auto;
+      max-width: 1100px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      letter-spacing: 1px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+    .product {
+      background: var(--card-bg);
+      border-radius: 18px;
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      min-height: 420px;
+    }
+    .product:hover {
+      transform: translateY(-6px) scale(1.025);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+    }
+    .product img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: #eaeaea;
+    }
+    .product-info {
+      padding: 22px 18px 18px 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product-info h3 {
+      font-size: 22px;
+      margin-bottom: 12px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .product-info p {
+      font-size: 18px;
+      margin-bottom: 18px;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .product-info button {
+      background: var(--primary);
+      color: white;
+      padding: 12px 0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: background 0.2s;
+      margin-top: auto;
+    }
+    .product-info button:hover {
+      background: #0056b3;
+    }
+    .cart {
+      background: var(--card-bg);
+      margin-top: 24px;
+      padding: 28px 24px;
+      border-radius: 18px;
+      box-shadow: var(--card-shadow);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cart h2 {
+      margin-bottom: 18px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 7px;
+      font-size: 17px;
+      color: var(--text);
+    }
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+    .total {
+      text-align: right;
+      font-weight: bold;
+      margin-top: 18px;
+      font-size: 20px;
+      color: var(--primary);
+    }
+    footer {
+      text-align: center;
+      background: var(--footer-bg);
+      color: white;
+      padding: 28px 0;
+      margin-top: 60px;
+      border-radius: 18px 18px 0 0;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.04);
+    }
+    @media (max-width: 900px) {
+      .container, .hero {
+        max-width: 98vw;
+      }
+      .products {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 600px) {
+      header h1 { font-size: 26px; }
+      .hero { font-size: 20px; height: 120px; }
+      .products { grid-template-columns: 1fr; gap: 18px; }
+      .cart { padding: 16px 8px; }
+      nav a { font-size: 15px; margin: 0 8px; }
+      .theme-toggle { top: 12px; right: 10px; font-size: 14px; padding: 6px 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙 Dark</button>
+    <h1>Deepain's eCommerce Store</h1>
+    <p>Roll No: 27261 | Dronacharya College of Engineering</p>
+  </header>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#products">Products</a>
+    <a href="#cart">Cart</a>
+  </nav>
+  <div class="hero">
+    Explore Latest Tech Gadgets!
+  </div>
+  <div class="container" id="products">
+    <h2 style="margin-bottom: 24px; font-size: 28px; color: var(--primary); font-weight: 800;">Featured Products</h2>
+    <div class="products" id="product-list">
+      <!-- Products will be injected here -->
+    </div>
+    <div class="cart" id="cart">
+      <h2>Your Cart</h2>
+      <div id="cart-items"></div>
+      <div class="total" id="total">Total: ₹0</div>
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 Deepain's Store. All rights reserved.
+  </footer>
+  <script>
+    const products = [
+      { id: 1, name: "Smartphone", price: 13999, image: "https://cdn.thewirecutter.com/wp-content/media/2024/09/iphone-2048px-6990-2x1-1.jpg?width=2048&quality=75&crop=2:1&auto=webp" },
+      { id: 2, name: "Laptop", price: 49999, image: "https://i.pcmag.com/imagery/roundups/02naaOkVLe7DIiejFUyDPJp-64..v1734989633.jpg" },
+      { id: 3, name: "Wireless Earbuds", price: 1999, image: "https://www.gonoise.com/cdn/shop/files/4_83ab5e13-fbce-4071-9630-470b86721e85.webp?v=1720440893" },
+      { id: 4, name: "Fitness Band", price: 999, image: "https://www.vitsupp.in/wp-content/uploads/2016/02/Garmin-Vivosmart-Blue-Fitness-Band-1.jpg" },
+      { id: 5, name: "Portable Charger", price: 1299, image: "https://cdn.thewirecutter.com/wp-content/media/2023/06/portablelaptopchargers-2048px-0278-2x1-1.jpg?width=2048&quality=75&crop=2:1&auto=webp" }
+    ];
+    let cart = [];
+    const productList = document.getElementById("product-list");
+    const cartItems = document.getElementById("cart-items");
+    const totalElement = document.getElementById("total");
+    function renderProducts() {
+      productList.innerHTML = "";
+      products.forEach(product => {
+        const card = document.createElement("div");
+        card.className = "product";
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" />
+          <div class="product-info">
+            <h3>${product.name}</h3>
+            <p>₹${product.price}</p>
+            <button onclick="addToCart(${product.id})">Add to Cart</button>
+          </div>
+        `;
+        productList.appendChild(card);
+      });
+    }
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      const existing = cart.find(item => item.id === id);
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+      updateCart();
+    }
+    function updateCart() {
+      cartItems.innerHTML = "";
+      let total = 0;
+      cart.forEach(item => {
+        total += item.qty * item.price;
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+          ${item.name} x ${item.qty}
+          <span>₹${item.qty * item.price}</span>
+        `;
+        cartItems.appendChild(div);
+      });
+      totalElement.textContent = `Total: ₹${total}`;
+    }
+    renderProducts();
+
+    const themeToggle = document.getElementById('theme-toggle');
+    function setTheme(theme) {
+      document.body.setAttribute('data-theme', theme);
+      themeToggle.textContent = theme === 'dark' ? '☀️ Light' : '🌙 Dark';
+      localStorage.setItem('theme', theme);
+    }
+    (function() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(saved || (prefersDark ? 'dark' : 'light'));
+    })();
+    themeToggle.onclick = function() {
+      const current = document.body.getAttribute('data-theme');
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    };
+  </script>
+</body>
+</html>
